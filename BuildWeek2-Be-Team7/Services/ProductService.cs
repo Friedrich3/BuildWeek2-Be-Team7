@@ -169,7 +169,6 @@ namespace BuildWeek2_Be_Team7.Services
         {
             try
             {
-
                 var existingProduct = await _context.Products.Include(p => p.Company).Include(p => p.Drawer).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
 
                 if (existingProduct == null)
@@ -177,7 +176,7 @@ namespace BuildWeek2_Be_Team7.Services
                     return false;
                 }
 
-                string webPath;
+                string webPath = existingProduct.Image;
                 if (changeProductDto.Image != null)
                 {
                     if (!string.IsNullOrEmpty(existingProduct.Image))
@@ -197,10 +196,6 @@ namespace BuildWeek2_Be_Team7.Services
                         await changeProductDto.Image.CopyToAsync(stream);
                     }
                     webPath = "/assets/images/" + fileName;
-                }
-                else
-                {
-                    webPath = existingProduct.Image;
                 }
 
                 existingProduct.Image = webPath;
