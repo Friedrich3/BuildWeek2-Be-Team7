@@ -25,7 +25,6 @@ namespace BuildWeek2_Be_Team7.Models.Auth
 
         public ICollection<ApplicationUserRole> ApplicationUserRole { get; set; }
         public ICollection<Order>? Pharmacists { get; set; }
-        public ICollection<Order>? Clients { get; set; }
         public ICollection<MedicalExam>? MedicalExams { get; set; }
 
 

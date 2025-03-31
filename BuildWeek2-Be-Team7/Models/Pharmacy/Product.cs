@@ -11,6 +11,8 @@ namespace BuildWeek2_Be_Team7.Models.Pharmacy
         [Required]
         public required string Name { get; set; }
 
+        public string Image { get; set; }
+
         [Required]
         public required double Price { get; set; }
 

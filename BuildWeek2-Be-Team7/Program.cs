@@ -1,6 +1,7 @@
 using System.Text;
 using BuildWeek2_Be_Team7.Data;
 using BuildWeek2_Be_Team7.Models.Auth;
+using BuildWeek2_Be_Team7.Services;
 using BuildWeek2_Be_Team7.Settings;
 using FluentEmail.MailKitSmtp;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -75,6 +76,8 @@ try
     builder.Services.AddScoped<UserManager<ApplicationUser>>();
     builder.Services.AddScoped<SignInManager<ApplicationUser>>();
     builder.Services.AddScoped<RoleManager<ApplicationRole>>();
+    builder.Services.AddScoped<EmailServices>();
+    builder.Services.AddScoped<PetServices>();
 
 
     var app = builder.Build();

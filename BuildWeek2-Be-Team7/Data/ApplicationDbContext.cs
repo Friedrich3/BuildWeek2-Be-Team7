@@ -76,6 +76,7 @@ namespace BuildWeek2_Be_Team7.Data
                 new Drawer() { Id = 5, Name = "Refrigerati", Position = "Bottom right" },
                 new Drawer() { Id = 6, Name = "Nutraceutici", Position = "Top right" }
                 );
+            modelBuilder.Entity<MedicalExam>().HasOne(m => m.Pet).WithMany(me => me.MedicalExams).HasForeignKey(me => me.PetId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

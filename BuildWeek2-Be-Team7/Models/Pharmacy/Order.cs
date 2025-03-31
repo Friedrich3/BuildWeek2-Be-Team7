@@ -14,7 +14,6 @@ namespace BuildWeek2_Be_Team7.Models.Pharmacy
         public required ApplicationUser Pharmacist { get; set; }
         [Required, StringLength(17)]
         public required string CfClient { get; set; }
-        public ApplicationUser? Client { get; set; }
         [Required]
         public DateTime Date { get; set; }
         public Guid? IdPrescription { get; set; }
