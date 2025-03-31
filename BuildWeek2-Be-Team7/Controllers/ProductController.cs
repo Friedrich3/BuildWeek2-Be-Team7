@@ -29,7 +29,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                     return BadRequest(new { messagge = "Ops qualcosa è andato storto" });
                 }
 
-                return Ok(new { message = "Prdotto aggiunto con successo" });
+                return Ok(new { message = "Prodotto aggiunto con successo" });
             }
             catch
             {
