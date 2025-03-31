@@ -30,13 +30,16 @@ namespace BuildWeek2_Be_Team7.Models.Animali
         [Required]
         public required DateOnly BirthDate { get; set; }
         [Required]
-        public bool isMicrochip { get; set; }
+        [StringLength(15)]
+        public required string Microchip { get; set; }
 
         [Required]
-        public required string UserId { get; set; }
+        public required Guid OwnerId { get; set; }
 
-        [ForeignKey(nameof(UserId))]
-        public required ApplicationUser User { get; set; }
+        [ForeignKey(nameof(OwnerId))]
+        public required Client Owner { get; set; }
+
+        public string? Image {  get; set; }
 
 
         public ICollection<MedicalExam> MedicalExams { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using BuildWeek2_Be_Team7.Models;
 using BuildWeek2_Be_Team7.Models.Animali;
 using BuildWeek2_Be_Team7.Models.Auth;
 using BuildWeek2_Be_Team7.Models.Pharmacy;
@@ -77,6 +78,10 @@ namespace BuildWeek2_Be_Team7.Data
                 new Drawer() { Id = 6, Name = "Nutraceutici", Position = "Top right" }
                 );
             modelBuilder.Entity<MedicalExam>().HasOne(m => m.Pet).WithMany(me => me.MedicalExams).HasForeignKey(me => me.PetId).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Client>().HasIndex(p => p.CodiceFiscale).IsUnique();
+            modelBuilder.Entity<Pet>().HasIndex(p => p.Microchip).IsUnique();
+            
         }
     }
 }
