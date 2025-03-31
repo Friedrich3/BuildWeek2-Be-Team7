@@ -26,5 +26,6 @@ namespace BuildWeek2_Be_Team7.Models.Auth
         public ICollection<Order>? Pharmacists { get; set; }
         public ICollection<Order>? Clients { get; set; }
 
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using BuildWeek2_Be_Team7.Models.Animali;
 using BuildWeek2_Be_Team7.Models.Auth;
 using BuildWeek2_Be_Team7.Models.Pharmacy;
 using Microsoft.AspNetCore.Identity;
@@ -21,6 +22,9 @@ namespace BuildWeek2_Be_Team7.Data
         public DbSet<Company> Companies { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<OrderProd> OrderProducts { get; set; }
+        public DbSet<Race> Races { get; set; }
+        public DbSet<Pet> Pets { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
