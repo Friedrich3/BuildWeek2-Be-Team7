@@ -19,10 +19,10 @@ namespace BuildWeek2_Be_Team7.Models.Pharmacy
         public DateTime Date { get; set; }
         public Guid? IdPrescription { get; set; }
         [ForeignKey(nameof(IdPrescription))]
-        public Prescription Prescription { get; set; }
+        public Prescription? Prescription { get; set; }
         [Required]
         public decimal Total { get; set; }
-        public ICollection<OrderProd> OrderProds { get; set; }
+        public ICollection<OrderProd>? OrderProds { get; set; }
 
     }
 }

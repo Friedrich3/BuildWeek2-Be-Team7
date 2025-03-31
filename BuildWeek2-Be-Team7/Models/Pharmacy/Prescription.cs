@@ -7,11 +7,12 @@ namespace BuildWeek2_Be_Team7.Models.Pharmacy
         [Key]
         public Guid Id { get; set; }
         [Required]
-        public string DoctorCode { get; set; }
+        public required string DoctorCode { get; set; }
         [Required]
-        public string Description { get; set; }
+        public required string Description { get; set; }
         [Required]
         public DateTime Date { get; set; }
+        public Order? Order { get; set; }
 
     }
 }
