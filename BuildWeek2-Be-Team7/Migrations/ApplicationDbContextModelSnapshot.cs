@@ -52,11 +52,14 @@ namespace BuildWeek2_Be_Team7.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Diagnosis")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ExamDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModified")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("PetId")
                         .HasColumnType("uniqueidentifier");
@@ -66,7 +69,6 @@ namespace BuildWeek2_Be_Team7.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Treatment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VetId")
@@ -96,9 +98,6 @@ namespace BuildWeek2_Be_Team7.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Microchip")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -106,10 +105,10 @@ namespace BuildWeek2_Be_Team7.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("OwnerId")
+                    b.Property<Guid?>("OwnerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("RaceId")
@@ -782,9 +781,7 @@ namespace BuildWeek2_Be_Team7.Migrations
                 {
                     b.HasOne("BuildWeek2_Be_Team7.Models.Client", "Owner")
                         .WithMany("Pets")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OwnerId");
 
                     b.HasOne("BuildWeek2_Be_Team7.Models.Animali.Race", "Race")
                         .WithMany("Pets")

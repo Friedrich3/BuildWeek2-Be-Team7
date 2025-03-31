@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BuildWeek2_Be_Team7.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class UpdateGrandeMerge : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -67,6 +67,22 @@ namespace BuildWeek2_Be_Team7.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Clients",
+                columns: table => new
+                {
+                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Birthdate = table.Column<DateOnly>(type: "date", nullable: false),
+                    CodiceFiscale = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clients", x => x.ClientId);
                 });
 
             migrationBuilder.CreateTable(
@@ -237,6 +253,7 @@ namespace BuildWeek2_Be_Team7.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     isMed = table.Column<bool>(type: "bit", nullable: false),
                     IdCategory = table.Column<int>(type: "int", nullable: false),
@@ -272,7 +289,7 @@ namespace BuildWeek2_Be_Team7.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdPharmacist = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CfClient = table.Column<string>(type: "nvarchar(17)", maxLength: 17, nullable: false),
+                    ClientId = table.Column<Guid>(type: "uniqueidentifier", maxLength: 17, nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IdPrescription = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
@@ -287,6 +304,12 @@ namespace BuildWeek2_Be_Team7.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Orders_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "ClientId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Orders_Prescriptions_IdPrescription",
                         column: x => x.IdPrescription,
                         principalTable: "Prescriptions",
@@ -299,22 +322,21 @@ namespace BuildWeek2_Be_Team7.Migrations
                 {
                     PetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RegistrationDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Color = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     RaceId = table.Column<int>(type: "int", nullable: false),
                     BirthDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    isMicrochip = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Microchip = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pets", x => x.PetId);
                     table.ForeignKey(
-                        name: "FK_Pets_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Pets_Clients_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "Clients",
+                        principalColumn: "ClientId");
                     table.ForeignKey(
                         name: "FK_Pets_Races_RaceId",
                         column: x => x.RaceId,
@@ -376,11 +398,12 @@ namespace BuildWeek2_Be_Team7.Migrations
                 {
                     ExamId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ExamDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Treatment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Diagnosis = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Treatment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Diagnosis = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VetId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    VetId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LastModified = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -498,6 +521,12 @@ namespace BuildWeek2_Be_Team7.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Clients_CodiceFiscale",
+                table: "Clients",
+                column: "CodiceFiscale",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Companies_Name",
                 table: "Companies",
                 column: "Name",
@@ -529,6 +558,11 @@ namespace BuildWeek2_Be_Team7.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_ClientId",
+                table: "Orders",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_IdPharmacist",
                 table: "Orders",
                 column: "IdPharmacist");
@@ -541,14 +575,20 @@ namespace BuildWeek2_Be_Team7.Migrations
                 filter: "[IdPrescription] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Pets_Microchip",
+                table: "Pets",
+                column: "Microchip",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pets_OwnerId",
+                table: "Pets",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Pets_RaceId",
                 table: "Pets",
                 column: "RaceId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Pets_UserId",
-                table: "Pets",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_IdCategory",
@@ -610,6 +650,9 @@ namespace BuildWeek2_Be_Team7.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Clients");
 
             migrationBuilder.DropTable(
                 name: "Prescriptions");

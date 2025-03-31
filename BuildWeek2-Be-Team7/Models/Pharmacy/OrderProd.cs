@@ -13,9 +13,9 @@ namespace BuildWeek2_Be_Team7.Models.Pharmacy
         public int Quantity { get; set; }
 
         [ForeignKey("OrderId")]
-        public required Order Order { get; set; }
+        public Order Order { get; set; }
 
         [ForeignKey("ProductId")]
-        public required Product Product { get; set; }
+        public Product Product { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace BuildWeek2_Be_Team7.Models.Pharmacy
         [Required]
         public required string IdPharmacist { get; set; }
         [ForeignKey(nameof(IdPharmacist))]
-        public required ApplicationUser Pharmacist { get; set; }
+        public ApplicationUser Pharmacist { get; set; }
         [Required, StringLength(17)]
         public required Guid ClientId { get; set; }
         [ForeignKey(nameof(ClientId))]

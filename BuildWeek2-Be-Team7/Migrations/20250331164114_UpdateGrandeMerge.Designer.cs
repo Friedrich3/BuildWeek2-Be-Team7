@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuildWeek2_Be_Team7.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250331115710_updateImage")]
-    partial class updateImage
+    [Migration("20250331164114_UpdateGrandeMerge")]
+    partial class UpdateGrandeMerge
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,11 +55,14 @@ namespace BuildWeek2_Be_Team7.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Diagnosis")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ExamDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModified")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("PetId")
                         .HasColumnType("uniqueidentifier");
@@ -69,7 +72,6 @@ namespace BuildWeek2_Be_Team7.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Treatment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VetId")
@@ -99,10 +101,18 @@ namespace BuildWeek2_Be_Team7.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<string>("Microchip")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("RaceId")
                         .HasColumnType("int");
@@ -110,18 +120,14 @@ namespace BuildWeek2_Be_Team7.Migrations
                     b.Property<DateOnly>("RegistrationDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("isMicrochip")
-                        .HasColumnType("bit");
-
                     b.HasKey("PetId");
 
-                    b.HasIndex("RaceId");
+                    b.HasIndex("Microchip")
+                        .IsUnique();
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("RaceId");
 
                     b.ToTable("Pets");
                 });
@@ -328,6 +334,42 @@ namespace BuildWeek2_Be_Team7.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("BuildWeek2_Be_Team7.Models.Client", b =>
+                {
+                    b.Property<Guid>("ClientId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly>("Birthdate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("CodiceFiscale")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("ClientId");
+
+                    b.HasIndex("CodiceFiscale")
+                        .IsUnique();
+
+                    b.ToTable("Clients");
+                });
+
             modelBuilder.Entity("BuildWeek2_Be_Team7.Models.Pharmacy.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -499,10 +541,9 @@ namespace BuildWeek2_Be_Team7.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CfClient")
-                        .IsRequired()
+                    b.Property<Guid>("ClientId")
                         .HasMaxLength(17)
-                        .HasColumnType("nvarchar(17)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -518,6 +559,8 @@ namespace BuildWeek2_Be_Team7.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
 
                     b.HasIndex("IdPharmacist");
 
@@ -739,21 +782,19 @@ namespace BuildWeek2_Be_Team7.Migrations
 
             modelBuilder.Entity("BuildWeek2_Be_Team7.Models.Animali.Pet", b =>
                 {
+                    b.HasOne("BuildWeek2_Be_Team7.Models.Client", "Owner")
+                        .WithMany("Pets")
+                        .HasForeignKey("OwnerId");
+
                     b.HasOne("BuildWeek2_Be_Team7.Models.Animali.Race", "Race")
                         .WithMany("Pets")
                         .HasForeignKey("RaceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BuildWeek2_Be_Team7.Models.Auth.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Owner");
 
                     b.Navigation("Race");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BuildWeek2_Be_Team7.Models.Auth.ApplicationUserRole", b =>
@@ -777,6 +818,12 @@ namespace BuildWeek2_Be_Team7.Migrations
 
             modelBuilder.Entity("BuildWeek2_Be_Team7.Models.Pharmacy.Order", b =>
                 {
+                    b.HasOne("BuildWeek2_Be_Team7.Models.Client", "Client")
+                        .WithMany("Orders")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BuildWeek2_Be_Team7.Models.Auth.ApplicationUser", "Pharmacist")
                         .WithMany("Pharmacists")
                         .HasForeignKey("IdPharmacist")
@@ -786,6 +833,8 @@ namespace BuildWeek2_Be_Team7.Migrations
                     b.HasOne("BuildWeek2_Be_Team7.Models.Pharmacy.Prescription", "Prescription")
                         .WithOne("Order")
                         .HasForeignKey("BuildWeek2_Be_Team7.Models.Pharmacy.Order", "IdPrescription");
+
+                    b.Navigation("Client");
 
                     b.Navigation("Pharmacist");
 
@@ -898,6 +947,13 @@ namespace BuildWeek2_Be_Team7.Migrations
                     b.Navigation("MedicalExams");
 
                     b.Navigation("Pharmacists");
+                });
+
+            modelBuilder.Entity("BuildWeek2_Be_Team7.Models.Client", b =>
+                {
+                    b.Navigation("Orders");
+
+                    b.Navigation("Pets");
                 });
 
             modelBuilder.Entity("BuildWeek2_Be_Team7.Models.Pharmacy.Category", b =>
