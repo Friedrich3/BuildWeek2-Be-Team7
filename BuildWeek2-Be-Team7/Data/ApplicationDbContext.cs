@@ -28,7 +28,6 @@ namespace BuildWeek2_Be_Team7.Data
         public DbSet<Hospitalization> Hospitalizations { get; set; }
         public DbSet<MedicalExam> MedicalExams { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
