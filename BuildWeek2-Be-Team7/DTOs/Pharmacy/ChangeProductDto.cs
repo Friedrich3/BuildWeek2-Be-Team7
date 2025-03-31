@@ -3,13 +3,9 @@
     public class ChangeProductDto
     {
         public required string Name { get; set; }
-        public required string Image { get; set; }
+        public IFormFile? Image { get; set; } = null;
         public required double Price { get; set; }
-        public required bool isMed { get; set; }
+        public bool isMed { get; set; }
         public int DrawerId { get; set; }
-        public int CategoryId { get; set; }
-        public required string CompanyName { get; set; }
-        public required string Address { get; set; }
-        public required string Tel { get; set; }
     }
 }

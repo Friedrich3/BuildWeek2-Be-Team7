@@ -32,6 +32,19 @@ namespace BuildWeek2_Be_Team7.Services
         {
             try
             {
+
+                string webPath = null;
+                if (addProductDto.Image != null)
+                {
+                    var fileName = addProductDto.Image.FileName;
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "assets", "images", fileName);
+                    await using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await addProductDto.Image.CopyToAsync(stream);
+                    }
+                    webPath = Path.Combine("assets", "images", fileName);
+                }
+
                 var existingCompany = await _context.Companies.FirstOrDefaultAsync(c => c.Name == addProductDto.CompanyName);
 
                 if (existingCompany == null)
@@ -49,7 +62,7 @@ namespace BuildWeek2_Be_Team7.Services
                 var newProduct = new Product()
                 {
                     Name = addProductDto.Name,
-                    Image = addProductDto.Image,
+                    Image = webPath,
                     Price = addProductDto.Price,
                     isMed = addProductDto.isMed,
                     IdCategory = addProductDto.CategoryId,
@@ -78,14 +91,14 @@ namespace BuildWeek2_Be_Team7.Services
 
                 var Products = new List<ProductResponseDto>();
 
-                foreach (var product in ProductsList) 
+                foreach (var product in ProductsList)
                 {
                     var newProduct = new ProductResponseDto()
                     {
                         Id = product.Id,
                         Name = product.Name,
                         Price = product.Price,
-                        isMed= product.isMed,
+                        isMed = product.isMed,
                         Image = product.Image,
                         Drawer = new DrawerDto()
                         {
@@ -117,7 +130,7 @@ namespace BuildWeek2_Be_Team7.Services
             {
                 var existingProduct = await _context.Products.Include(p => p.Company).Include(p => p.Drawer).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
 
-                if (existingProduct == null) 
+                if (existingProduct == null)
                 {
                     return null;
                 }
@@ -151,31 +164,45 @@ namespace BuildWeek2_Be_Team7.Services
             }
         }
 
+        
         public async Task<bool> ChangeProductAsync(Guid id, ChangeProductDto changeProductDto)
         {
             try
             {
                 var existingProduct = await _context.Products.Include(p => p.Company).Include(p => p.Drawer).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
 
-                if (existingProduct == null) 
-                { 
-                    return false; 
-                }
-
-                var Company = await _context.Companies.FirstOrDefaultAsync(c => c.Id == existingProduct.IdCompany);
-
-                if (Company == null) 
-                { 
+                if (existingProduct == null)
+                {
                     return false;
                 }
 
+                string webPath = existingProduct.Image;
+                if (changeProductDto.Image != null)
+                {
+                    if (!string.IsNullOrEmpty(existingProduct.Image))
+                    {
+                        var oldImagePath = Path.Combine(Directory.GetCurrentDirectory(), existingProduct.Image.TrimStart('/'));
+                        if (File.Exists(oldImagePath))
+                        {
+                            File.Delete(oldImagePath);
+                        }
+                    }
+
+                    var fileName = changeProductDto.Image.FileName;
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "assets", "images", fileName);
+
+                    await using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await changeProductDto.Image.CopyToAsync(stream);
+                    }
+                    webPath = "/assets/images/" + fileName;
+                }
+
+                existingProduct.Image = webPath;
                 existingProduct.Name = changeProductDto.Name;
                 existingProduct.Price = changeProductDto.Price;
-                existingProduct.Image = changeProductDto.Image;
                 existingProduct.isMed = changeProductDto.isMed;
                 existingProduct.IdDrawer = changeProductDto.DrawerId;
-                existingProduct.IdCategory = changeProductDto.CategoryId;
-                existingProduct.IdCompany = Company.Id;
 
                 return await SaveAsync();
             }
