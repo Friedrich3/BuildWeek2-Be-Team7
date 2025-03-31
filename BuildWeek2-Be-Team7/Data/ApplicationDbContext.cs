@@ -1,4 +1,5 @@
 ﻿using System;
+using BuildWeek2_Be_Team7.Models;
 using BuildWeek2_Be_Team7.Models.Animali;
 using BuildWeek2_Be_Team7.Models.Auth;
 using BuildWeek2_Be_Team7.Models.Pharmacy;
@@ -41,8 +42,45 @@ namespace BuildWeek2_Be_Team7.Data
 
             modelBuilder.Entity<ApplicationUser>().HasIndex(p => p.CodiceFiscale).IsUnique();
 
+            modelBuilder.Entity<Race>().HasData(
+                new Race() { RaceId = 1, Name = "Cane" },
+                new Race() { RaceId = 2, Name = "Gatto" },
+                new Race() { RaceId = 3, Name = "Coniglio" },
+                new Race() { RaceId = 4, Name = "Animali esotici" }
+                );
+
+            modelBuilder.Entity<Company>()
+                .HasIndex(c => c.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<Category>().HasData(
+                new Category() { Id = 1, Name = "Cibo secco" },
+                new Category() { Id = 2, Name = "Cibo umido" },
+                new Category() { Id = 3, Name = "Integratori" },
+                new Category() { Id = 4, Name = "Antibiotici" },
+                new Category() { Id = 5, Name = "Analgesici" },
+                new Category() { Id = 6, Name = "Antiparassitari" },
+                new Category() { Id = 7, Name = "Vaccini" },
+                new Category() { Id = 8, Name = "Sistema Cardiovascolare" },
+                new Category() { Id = 9, Name = "Sistema Respiratorio" },
+                new Category() { Id = 10, Name = "Sistema Gastrointestinale" },
+                new Category() { Id = 11, Name = "Oftalmici" },
+                new Category() { Id = 12, Name = "Dermatologici" }
+                );
+
+            modelBuilder.Entity<Drawer>().HasData(
+                new Drawer() { Id = 1, Name = "Alta rotazione", Position = "Center left" },
+                new Drawer() { Id = 2, Name = "Emergenza", Position = "Top left" },
+                new Drawer() { Id = 3, Name = "Uso Comune", Position = "Center right" },
+                new Drawer() { Id = 4, Name = "Specialistici", Position = "Bottom left" },
+                new Drawer() { Id = 5, Name = "Refrigerati", Position = "Bottom right" },
+                new Drawer() { Id = 6, Name = "Nutraceutici", Position = "Top right" }
+                );
+            modelBuilder.Entity<MedicalExam>().HasOne(m => m.Pet).WithMany(me => me.MedicalExams).HasForeignKey(me => me.PetId).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Client>().HasIndex(p => p.CodiceFiscale).IsUnique();
+            modelBuilder.Entity<Pet>().HasIndex(p => p.Microchip).IsUnique();
+            
         }
-
-
     }
 }
