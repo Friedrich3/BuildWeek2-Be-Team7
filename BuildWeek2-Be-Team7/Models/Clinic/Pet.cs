@@ -25,22 +25,17 @@ namespace BuildWeek2_Be_Team7.Models.Animali
         public required int RaceId { get; set; }
 
         [ForeignKey(nameof(RaceId))]
-        public required Race Race { get; set; }
+        public Race Race { get; set; }
 
         [Required]
         public required DateOnly BirthDate { get; set; }
-        [Required]
         [StringLength(15)]
-        public required string Microchip { get; set; }
+        public string Microchip { get; set; }
 
-        [Required]
-        public required Guid OwnerId { get; set; }
+        public Guid? OwnerId { get; set; }
 
         [ForeignKey(nameof(OwnerId))]
-        public required Client Owner { get; set; }
-
-        public string? Image {  get; set; }
-
+        public Client Owner { get; set; }   
 
         public ICollection<MedicalExam> MedicalExams { get; set; }
 
