@@ -7,6 +7,7 @@ using BuildWeek2_Be_Team7.Settings;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace BuildWeek2_Be_Team7.Controllers
@@ -20,9 +21,9 @@ namespace BuildWeek2_Be_Team7.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
 
-        public AccountController(Jwt jwtSettings, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager)
+        public AccountController(IOptions<Jwt> jwtSettings, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager)
         {
-            _jwtSettings = jwtSettings;
+            _jwtSettings = jwtSettings.Value;
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
@@ -66,7 +67,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                 });
             }
 
-            await _userManager.AddToRoleAsync(user, "Utente");
+            await _userManager.AddToRoleAsync(user, "User");
 
             return Ok(new
             {

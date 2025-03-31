@@ -19,6 +19,25 @@ namespace BuildWeek2_Be_Team7.Controllers
             _medicalExamServices = medicalExamServices;
         }
 
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllMedical()
+        {
+            try
+            {
+                var result = await _medicalExamServices.GetAllExam();
+                if (result == null)
+                {
+                    return BadRequest(new { message = "ops, something went wrong!" });
+                }
+                return Ok(new { message = $"Results found : {result.Count()}", data = result });
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpPost("add")]
         public async Task<IActionResult> AddExam([FromBody] AddMedicalExam addMedicalExam)
         {

@@ -86,5 +86,22 @@ namespace BuildWeek2_Be_Team7.Services
             _context.Remove(medExam);
             return await SaveAsync();
         }
+
+        public async Task<List<SingleMedicalExamDto>> GetAllExam()
+        {
+            var ExamList =  new List<SingleMedicalExamDto>();
+            var data = await _context.MedicalExams.Include(p => p.Vet).Include(p => p.Pet).ThenInclude(p => p.Owner).ToListAsync();
+            if ( data == null ) { return ExamList; }
+            ExamList = data.Select(item => new SingleMedicalExamDto()
+            {
+                ExamId = item.ExamId,
+                ExamDate = item.ExamDate,
+                State = item.State,
+                VetName = $"Dott. {item.Vet.LastName} {item.Vet.FirstName}",
+                PetName = item.Pet.Name ,
+                OwnerName = item.Pet.Owner.Name ,
+            }).ToList();
+            return ExamList;
+        }
     }
 }
