@@ -78,6 +78,7 @@ try
     builder.Services.AddScoped<RoleManager<ApplicationRole>>();
     builder.Services.AddScoped<EmailServices>();
     builder.Services.AddScoped<PetServices>();
+    builder.Services.AddScoped<MedicalExamServices>();
 
 
     var app = builder.Build();

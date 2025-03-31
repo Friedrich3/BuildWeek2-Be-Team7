@@ -12,10 +12,10 @@ namespace BuildWeek2_Be_Team7.Models.Animali
         [Required]
         public DateTime ExamDate { get; set; }
 
-        [Required]
-        public required string Treatment {  get; set; }
-        [Required]
-        public required string Diagnosis { get; set; }
+        
+        public string? Treatment {  get; set; }
+        
+        public string? Diagnosis { get; set; }
 
         [Required]
         public required Guid PetId { get; set; }
@@ -30,5 +30,8 @@ namespace BuildWeek2_Be_Team7.Models.Animali
         public required string VetId { get; set; }
         [ForeignKey(nameof(VetId))]
         public ApplicationUser Vet { get; set; }
+
+        [Required]
+        public required string LastModified { get; set; }
     } 
 }
