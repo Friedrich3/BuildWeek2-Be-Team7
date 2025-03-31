@@ -3,7 +3,7 @@
     public class AddProductDto
     {
         public required string Name { get; set; }
-        public required string Image { get; set; }
+        public required IFormFile Image { get; set; }
         public required double Price { get; set; }
         public required bool isMed { get; set; }
         public int DrawerId { get; set; }

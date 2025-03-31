@@ -29,4 +29,8 @@
 		<PackageReference Include="FluentEmail.Smtp" Version="3.0.2" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="assets\images\" />
+	</ItemGroup>
+
 </Project>

@@ -18,7 +18,7 @@ namespace BuildWeek2_Be_Team7.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProduct([FromBody] AddProductDto addProductDto)
+        public async Task<IActionResult> AddProduct([FromForm] AddProductDto addProductDto)
         {
             try
             {
@@ -81,22 +81,23 @@ namespace BuildWeek2_Be_Team7.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> ChangeProduct([FromQuery] Guid id, [FromBody] ChangeProductDto changeProductDto)
-        {
+        public async Task<IActionResult> ChangeProduct([FromQuery] Guid id, [FromForm] ChangeProductDto changeProductDto)
+        {           
             try
-            {
+            { 
+               //ModelState.Clear(); 
                 var result = await _productService.ChangeProductAsync(id, changeProductDto);
 
                 if (!result)
                 {
-                    return BadRequest(new { message = "Ops qualcosa è andato storto!" });
+                    return BadRequest(new { message = "Ops, qualcosa è andato storto!" });
                 }
 
                 return Ok(new { message = "Prodotto aggiornato con successo!" });
             }
             catch
             {
-                return StatusCode(500, new { messagge = "Ops qualcosa è andato storto!" });
+                return StatusCode(500, new { message = "Errore interno del server!" });
             }
         }
 
