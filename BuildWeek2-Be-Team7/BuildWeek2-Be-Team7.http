@@ -1,0 +1,6 @@
+@BuildWeek2_Be_Team7_HostAddress = http://localhost:5250
+
+GET {{BuildWeek2_Be_Team7_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
