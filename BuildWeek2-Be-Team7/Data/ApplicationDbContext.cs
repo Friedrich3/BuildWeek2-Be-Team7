@@ -1,4 +1,5 @@
 ﻿using System;
+using BuildWeek2_Be_Team7.Models.Animali;
 using BuildWeek2_Be_Team7.Models.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -13,6 +14,9 @@ namespace BuildWeek2_Be_Team7.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 		public DbSet<ApplicationRole> ApplicationRoles { get; set; }
 		public DbSet<ApplicationUserRole> ApplicationUserRoles { get; set; }
+
+        public DbSet<Race> Races { get; set; }
+        public DbSet<Pet> Pets { get; set; }
 
 
 

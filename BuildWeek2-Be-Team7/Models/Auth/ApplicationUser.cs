@@ -22,5 +22,7 @@ namespace BuildWeek2_Be_Team7.Models.Auth
 
 
         public ICollection<ApplicationUserRole> ApplicationUserRole { get; set; }
+
+
     }
 }
