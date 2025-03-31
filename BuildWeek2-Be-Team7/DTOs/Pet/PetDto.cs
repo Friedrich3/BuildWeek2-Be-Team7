@@ -15,6 +15,6 @@ namespace BuildWeek2_Be_Team7.DTOs.Pet
         public required string Race { get; set; }
         public required DateOnly BirthDate { get; set; }
         public string Microchip { get; set; }
-        public Owner Owner { get; set; }
+        public OwnerDto Owner { get; set; }
     }
 }
