@@ -1,19 +1,21 @@
 ﻿using System;
 using BuildWeek2_Be_Team7.Models.Auth;
+using BuildWeek2_Be_Team7.Models.Pharmacy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuildWeek2_Be_Team7.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, IdentityUserClaim<string>, ApplicationUserRole, IdentityUserLogin<string>, IdentityRoleClaim<string>,IdentityUserToken<string>>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, IdentityUserClaim<string>, ApplicationUserRole, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-		public DbSet<ApplicationRole> ApplicationRoles { get; set; }
-		public DbSet<ApplicationUserRole> ApplicationUserRoles { get; set; }
-
+        public DbSet<ApplicationRole> ApplicationRoles { get; set; }
+        public DbSet<ApplicationUserRole> ApplicationUserRoles { get; set; }
+        public DbSet<Order> Order { get; set; }
+        public DbSet<Prescription> Prescription { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,7 +31,7 @@ namespace BuildWeek2_Be_Team7.Data
             modelBuilder.Entity<ApplicationRole>().HasData(new ApplicationRole() { Id = "6DD52BC5-AC79-4A54-B6CD-302475F6E068", Name = "User", NormalizedName = "USER", ConcurrencyStamp = "6DD52BC5-AC79-4A54-B6CD-302475F6E068" });
 
             modelBuilder.Entity<ApplicationUser>().HasIndex(p => p.CodiceFiscale).IsUnique();
-        
+
         }
 
 
