@@ -2,5 +2,10 @@
 {
     public class AddPet
     {
+        public required string Name { get; set; }
+        public required string Color { get; set; }
+        public required int Race { get; set; }
+        public required DateOnly BirthDate { get; set; }
+        public string? Microchip { get; set; }
     }
 }

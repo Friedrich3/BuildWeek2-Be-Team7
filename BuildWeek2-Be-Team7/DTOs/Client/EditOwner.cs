@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace BuildWeek2_Be_Team7.DTOs.Client
+﻿namespace BuildWeek2_Be_Team7.DTOs.Client
 {
-    public class Owner
+    public class EditOwner
     {
-        public Guid IdOwner { get; set; }
         public required string Name { get; set; }
         public required string Surname { get; set; }
         public required DateOnly Birthdate { get; set; }
