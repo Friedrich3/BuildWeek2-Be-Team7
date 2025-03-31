@@ -2,5 +2,10 @@
 {
     public class EditPet
     {
+        public required string Name { get; set; }
+        public required string Color { get; set; }
+        public required string Race { get; set; }
+        public required DateOnly BirthDate { get; set; }
+        public string? Microchip { get; set; }
     }
 }
