@@ -42,8 +42,40 @@ namespace BuildWeek2_Be_Team7.Data
 
             modelBuilder.Entity<ApplicationUser>().HasIndex(p => p.CodiceFiscale).IsUnique();
 
+            modelBuilder.Entity<Race>().HasData(
+                new Race() { RaceId = 1, Name = "Cane" },
+                new Race() { RaceId = 2, Name = "Gatto" },
+                new Race() { RaceId = 3, Name = "Coniglio" },
+                new Race() { RaceId = 4, Name = "Animali esotici" }
+                );
+
+            modelBuilder.Entity<Company>()
+                .HasIndex(c => c.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<Category>().HasData(
+                new Category() { Id = 1, Name = "Cibo secco" },
+                new Category() { Id = 2, Name = "Cibo umido" },
+                new Category() { Id = 3, Name = "Integratori" },
+                new Category() { Id = 4, Name = "Antibiotici" },
+                new Category() { Id = 5, Name = "Analgesici" },
+                new Category() { Id = 6, Name = "Antiparassitari" },
+                new Category() { Id = 7, Name = "Vaccini" },
+                new Category() { Id = 8, Name = "Sistema Cardiovascolare" },
+                new Category() { Id = 9, Name = "Sistema Respiratorio" },
+                new Category() { Id = 10, Name = "Sistema Gastrointestinale" },
+                new Category() { Id = 11, Name = "Oftalmici" },
+                new Category() { Id = 12, Name = "Dermatologici" }
+                );
+
+            modelBuilder.Entity<Drawer>().HasData(
+                new Drawer() { Id = 1, Name = "Cibo", Position = "Top left" },
+                new Drawer() { Id = 2, Name = "Medicinali", Position = "Top center" },
+                new Drawer() { Id = 3, Name = "Medicinali", Position = "Top right" },
+                new Drawer() { Id = 4, Name = "Medicinali", Position = "Bottom left" },
+                new Drawer() { Id = 5, Name = "Medicinali", Position = "Bottom center" },
+                new Drawer() { Id = 6, Name = "Nutraceutici", Position = "Bottom right" }
+                );
         }
-
-
     }
 }
