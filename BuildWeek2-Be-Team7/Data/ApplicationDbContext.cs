@@ -69,12 +69,12 @@ namespace BuildWeek2_Be_Team7.Data
                 );
 
             modelBuilder.Entity<Drawer>().HasData(
-                new Drawer() { Id = 1, Name = "Cibo", Position = "Top left" },
-                new Drawer() { Id = 2, Name = "Medicinali", Position = "Top center" },
-                new Drawer() { Id = 3, Name = "Medicinali", Position = "Top right" },
-                new Drawer() { Id = 4, Name = "Medicinali", Position = "Bottom left" },
-                new Drawer() { Id = 5, Name = "Medicinali", Position = "Bottom center" },
-                new Drawer() { Id = 6, Name = "Nutraceutici", Position = "Bottom right" }
+                new Drawer() { Id = 1, Name = "Alta rotazione", Position = "Center left" },
+                new Drawer() { Id = 2, Name = "Emergenza", Position = "Top left" },
+                new Drawer() { Id = 3, Name = "Uso Comune", Position = "Center right" },
+                new Drawer() { Id = 4, Name = "Specialistici", Position = "Bottom left" },
+                new Drawer() { Id = 5, Name = "Refrigerati", Position = "Bottom right" },
+                new Drawer() { Id = 6, Name = "Nutraceutici", Position = "Top right" }
                 );
         }
     }
