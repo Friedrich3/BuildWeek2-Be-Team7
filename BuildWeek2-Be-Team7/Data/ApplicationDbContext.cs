@@ -24,7 +24,8 @@ namespace BuildWeek2_Be_Team7.Data
         public DbSet<OrderProd> OrderProducts { get; set; }
         public DbSet<Race> Races { get; set; }
         public DbSet<Pet> Pets { get; set; }
-
+        public DbSet<Hospitalization> Hospitalizations { get; set; }
+        public DbSet<MedicalExam> MedicalExams { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
