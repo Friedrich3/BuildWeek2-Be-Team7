@@ -80,6 +80,7 @@ try
     builder.Services.AddScoped<PetServices>();
     builder.Services.AddScoped<ClientServices>();
     builder.Services.AddScoped<ProductService>();
+    builder.Services.AddScoped<MedicalExamServices>();
 
 
     var app = builder.Build();
