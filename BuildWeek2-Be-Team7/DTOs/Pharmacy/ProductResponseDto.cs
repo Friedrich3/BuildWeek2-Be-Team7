@@ -10,6 +10,8 @@ namespace BuildWeek2_Be_Team7.DTOs.Pharmacy
 
         public required double Price { get; set; }
 
+        public required string Image { get; set; }
+
         public required bool isMed { get; set; }
 
         public DrawerDto Drawer { get; set; }
