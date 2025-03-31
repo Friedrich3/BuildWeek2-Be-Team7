@@ -201,7 +201,7 @@ namespace BuildWeek2_Be_Team7.Services
                 }
                 else
                 {
-                    webPath = changeProductDto.ImageView;
+                    webPath = existingProduct.Image;
                 }
 
                 existingProduct.Image = webPath;
