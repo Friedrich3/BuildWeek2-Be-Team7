@@ -35,6 +35,6 @@ namespace BuildWeek2_Be_Team7.Models.Pharmacy
         [ForeignKey("IdDrawer")]
         public Drawer Drawer { get; set; }
 
-        public ICollection<OrderProd> orderProds { get; set; }
+        public ICollection<OrderProd> OrderProds { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BuildWeek2_Be_Team7.Models.Pharmacy;
 using Microsoft.AspNetCore.Identity;
 
 namespace BuildWeek2_Be_Team7.Models.Auth
@@ -22,5 +23,8 @@ namespace BuildWeek2_Be_Team7.Models.Auth
 
 
         public ICollection<ApplicationUserRole> ApplicationUserRole { get; set; }
+        public ICollection<Order>? Pharmacists { get; set; }
+        public ICollection<Order>? Clients { get; set; }
+
     }
 }
