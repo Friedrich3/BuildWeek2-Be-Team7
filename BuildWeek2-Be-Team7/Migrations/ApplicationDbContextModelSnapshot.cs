@@ -365,7 +365,7 @@ namespace BuildWeek2_Be_Team7.Migrations
                     b.HasIndex("CodiceFiscale")
                         .IsUnique();
 
-                    b.ToTable("Client");
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("BuildWeek2_Be_Team7.Models.Pharmacy.Category", b =>

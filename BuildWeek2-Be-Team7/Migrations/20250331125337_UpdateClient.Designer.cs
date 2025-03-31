@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuildWeek2_Be_Team7.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250331124557_UpdateClient")]
+    [Migration("20250331125337_UpdateClient")]
     partial class UpdateClient
     {
         /// <inheritdoc />
@@ -368,7 +368,7 @@ namespace BuildWeek2_Be_Team7.Migrations
                     b.HasIndex("CodiceFiscale")
                         .IsUnique();
 
-                    b.ToTable("Client");
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("BuildWeek2_Be_Team7.Models.Pharmacy.Category", b =>

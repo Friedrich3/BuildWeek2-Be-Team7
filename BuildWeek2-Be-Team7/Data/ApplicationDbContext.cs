@@ -27,6 +27,7 @@ namespace BuildWeek2_Be_Team7.Data
         public DbSet<Pet> Pets { get; set; }
         public DbSet<Hospitalization> Hospitalizations { get; set; }
         public DbSet<MedicalExam> MedicalExams { get; set; }
+        public DbSet<Client> Clients { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -80,7 +81,7 @@ namespace BuildWeek2_Be_Team7.Data
 
             modelBuilder.Entity<Client>().HasIndex(p => p.CodiceFiscale).IsUnique();
             modelBuilder.Entity<Pet>().HasIndex(p => p.Microchip).IsUnique();
-            
+
         }
     }
 }
