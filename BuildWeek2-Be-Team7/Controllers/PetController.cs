@@ -3,6 +3,7 @@ using BuildWeek2_Be_Team7.DTOs.Pet;
 using BuildWeek2_Be_Team7.Models;
 using BuildWeek2_Be_Team7.Models.Animali;
 using BuildWeek2_Be_Team7.Services;
+using FluentEmail.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +38,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                 }
                 var count = result.Count();
 
-                var text = count == 1 ? $"{count} animale trovato" : $"{count} animali trovati";
+                var text = count == 1 ? $"{count} animal found" : $"{count} animals found";
 
                 var pets = result.Select(s => new PetDto
                 {
@@ -164,7 +165,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                     RaceId = pet.Race,
                 };
                 var result = await _petServices.New(newPet);
-                return result ? Ok(new { Message = "Pet aggiunto!" }) : BadRequest(new { Message = "Something went wrong!" });
+                return result ? Ok(new { Message = "Pet successfully added!" }) : BadRequest(new { Message = "Something went wrong!" });
             }
             catch (Exception ex)
             {
@@ -184,14 +185,59 @@ namespace BuildWeek2_Be_Team7.Controllers
                 Microchip = model.Microchip ?? null,
             };
             var result = await _petServices.Update(id, pet);
-            return result ? Ok(new { message = "Pet aggiornato!" }) : BadRequest(new { message = "Something went wrong" });
+            return result ? Ok(new { message = "Pet successfully updated!" }) : BadRequest(new { message = "Something went wrong" });
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _petServices.Delete(id);
-            return result ? Ok(new { message = "Pet eliminato!" }) : BadRequest(new { message = "Something went wrong" });
+            return result ? Ok(new { message = "Pet successfully deleted!" }) : BadRequest(new { message = "Something went wrong" });
+        }
+
+        [HttpGet("/Owner")]
+        public async Task<IActionResult> GetOneOwnerCF([FromQuery] string CF)
+        {
+            try
+            {
+                var owner = await _clientServices.GetOneOwnerCFAsync(CF);
+
+                return owner != null ? Ok(new { message = "Owner found", Owner = owner }) : BadRequest(new { message = "Something went wrong" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateOwner([FromQuery] Guid id, [FromBody] string email)
+        {
+            try
+            {
+                var result = await _clientServices.UpdateOwnerAsync(id, email);
+
+                return result ? Ok(new { message = "Email successfully updated!" }) : BadRequest(new { messagge = "Something went wrong" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteOwner([FromQuery] Guid id)
+        {
+            try
+            {
+                var result = await _clientServices.DeleteOwnerAsync(id);
+
+                return result ? Ok(new { message = "Email successfully deleted!" }) : BadRequest(new { messagge = "Something went wrong" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }
