@@ -15,7 +15,7 @@ namespace BuildWeek2_Be_Team7.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = "Veterinario, Admin")]
+    [Authorize(Roles = "Veterinario, Admin")]
     public class PetController : ControllerBase
     {
         private readonly PetServices _petServices;

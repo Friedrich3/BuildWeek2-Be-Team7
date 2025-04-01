@@ -1,6 +1,7 @@
 ﻿using BuildWeek2_Be_Team7.DTOs.Pharmacy;
 using BuildWeek2_Be_Team7.Models.Pharmacy;
 using BuildWeek2_Be_Team7.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace BuildWeek2_Be_Team7.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Farmacista, Admin")]
     public class ProductController : ControllerBase
     {
         private readonly ProductService _productService;

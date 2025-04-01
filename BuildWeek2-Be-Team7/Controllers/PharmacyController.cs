@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BuildWeek2_Be_Team7.Models.Pharmacy;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BuildWeek2_Be_Team7.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Farmacista, Admin")]
     public class PharmacyController : ControllerBase
     {
         private readonly PharmacyServices _pharmacyServices;
