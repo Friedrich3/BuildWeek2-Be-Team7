@@ -133,15 +133,16 @@ namespace BuildWeek2_Be_Team7.Controllers
             }
             catch (Exception ex) { return StatusCode(500, ex.Message); }
         }
+
         [HttpPost]
         public async Task<IActionResult> New([FromBody] AddPet pet)
         {
             try
             {
                 Client Owner = null;
-                if (pet.Email != null)
+                if (pet.CodiceFiscale != null)
                 {
-                    Owner = await _clientServices.GetOne(pet.Email);
+                    Owner = await _clientServices.GetOne(pet.CodiceFiscale);
                     if (Owner == null)
                     {
                         Owner = new Client
@@ -173,6 +174,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
         [HttpPut]
         public async Task<IActionResult> Update([FromQuery] Guid id, [FromBody] EditPet model)
         {
@@ -212,11 +214,11 @@ namespace BuildWeek2_Be_Team7.Controllers
         }
 
         [HttpPut("Owner")]
-        public async Task<IActionResult> UpdateOwner([FromQuery] Guid id, [FromBody] string email)
+        public async Task<IActionResult> UpdateOwner([FromQuery] string CF, [FromBody] string email)
         {
             try
             {
-                var result = await _clientServices.UpdateOwnerAsync(id, email);
+                var result = await _clientServices.UpdateOwnerAsync(CF, email);
 
                 return result ? Ok(new { message = "Email successfully updated!" }) : BadRequest(new { messagge = "Something went wrong" });
             }
@@ -227,11 +229,11 @@ namespace BuildWeek2_Be_Team7.Controllers
         }
 
         [HttpDelete("Owner")]
-        public async Task<IActionResult> DeleteOwner([FromQuery] Guid id)
+        public async Task<IActionResult> DeleteOwner([FromQuery] string CF)
         {
             try
             {
-                var result = await _clientServices.DeleteOwnerAsync(id);
+                var result = await _clientServices.DeleteOwnerAsync(CF);
 
                 return result ? Ok(new { message = "Email successfully deleted!" }) : BadRequest(new { messagge = "Something went wrong" });
             }
