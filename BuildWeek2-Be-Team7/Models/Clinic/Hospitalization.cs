@@ -9,7 +9,6 @@ namespace BuildWeek2_Be_Team7.Models.Animali
         public Guid HospitalizationId { get; set; }
         [Required]
         public required DateOnly StartDate { get; set; }
-        [Required]
         public DateOnly? EndDate { get; set; }
         [Required]
         public required Guid PetId { get; set; }

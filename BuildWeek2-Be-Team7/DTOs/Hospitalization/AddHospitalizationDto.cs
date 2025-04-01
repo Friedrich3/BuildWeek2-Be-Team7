@@ -6,9 +6,7 @@ namespace BuildWeek2_Be_Team7.DTOs.Hospitalization
 {
     public class AddHospitalizationDto
     {
-       
-        [Required]
-        public required DateOnly StartDate { get; set; }
+        public required DateTime StartDate { get; set; }
         
         public required Guid PetId { get; set; }
        

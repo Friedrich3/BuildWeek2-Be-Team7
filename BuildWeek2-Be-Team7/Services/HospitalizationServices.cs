@@ -33,8 +33,7 @@ namespace BuildWeek2_Be_Team7.Services
             if (pet == null) { return false; }
             var newHospit = new Hospitalization()
             {
-                HospitalizationId = Guid.NewGuid(),
-                StartDate = addHospitalizationDto.StartDate,
+                StartDate = DateOnly.FromDateTime(addHospitalizationDto.StartDate),
                 PetId = addHospitalizationDto.PetId,
             };
             _context.Hospitalizations.Add(newHospit);
@@ -64,22 +63,38 @@ namespace BuildWeek2_Be_Team7.Services
 
         public async Task<bool> EndRecovery(Guid hospitId)
         {
-            var hospit = _context.Hospitalizations.FirstOrDefault(p => p.HospitalizationId == hospitId);
+            var hospit = await _context.Hospitalizations.FirstOrDefaultAsync(p => p.HospitalizationId == hospitId);
             if (hospit == null) { return false; }
             hospit.EndDate = DateOnly.FromDateTime(DateTime.Now);
             return await SaveAsync();
         }
 
 
-        public async Task<List<SingleHospitalizationDto>> GetAllHospitActive()
+        public async Task<List<SingleHospitalizationDto>?> GetAllHospitActive(string isActive)
         {
             var ListHospit = new List<SingleHospitalizationDto>();
-            var data = await _context.Hospitalizations.Include(p => p.Pet).ThenInclude(p=> p.Race).Where(p => p.EndDate == null).ToListAsync();
-            if (data.Count == 0) { return ListHospit; }
+            List<Hospitalization> data;
+            switch (isActive)
+            {
+                case "true":
+                    data = await _context.Hospitalizations.Include(p => p.Pet).ThenInclude(p => p.Race).Where(p => p.EndDate == null).ToListAsync();
+                    break;
+                case "false":
+                    data = await _context.Hospitalizations.Include(p => p.Pet).ThenInclude(p => p.Race).Where(p => p.EndDate != null).ToListAsync();
+                    break;
+                case null:
+                    data = await _context.Hospitalizations.Include(p => p.Pet).ThenInclude(p => p.Race).ToListAsync();
+                    break;
+                default:
+                    return null;
+                    
+            }
+           if (data.Count == 0) { return ListHospit; }
             ListHospit = data.Select(item => new SingleHospitalizationDto()
             {
                 HospitalizationId = item.HospitalizationId,
                 StartDate = item.StartDate,
+                EndDate = item.EndDate,
                 Pet = new PetHospitalizationDto()
                 {
                     PetId = item.Pet.PetId,

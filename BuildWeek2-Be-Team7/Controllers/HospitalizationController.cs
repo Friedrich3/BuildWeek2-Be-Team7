@@ -16,7 +16,7 @@ namespace BuildWeek2_Be_Team7.Controllers
             _hospitalizationServices = hospitalizationServices;
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         [Authorize(Roles = "Admin, Veterinario, User")]
         public async Task<IActionResult> AddHospitalization([FromBody] AddHospitalizationDto addHospitalizationDto)
         {
@@ -35,9 +35,9 @@ namespace BuildWeek2_Be_Team7.Controllers
             }
         }
 
-        [HttpGet("edit")]
+        [HttpGet("{hospitId}")]
         [Authorize(Roles = "Admin, Veterinario, User")]
-        public async Task<IActionResult> EditHospitalization([FromQuery] Guid hospitId)
+        public async Task<IActionResult> EditHospitalization(Guid hospitId)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpPut("edit")]
+        [HttpPut("save")]
         [Authorize(Roles = "Admin, Veterinario, User")]
         public async Task<IActionResult> EditSaveHospitalization([FromQuery]Guid hospitId, [FromBody] EditHospitalizationDto editHospitalizationDto)
         {
@@ -71,7 +71,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpPut("endRecovery")]
+        [HttpPut]   
         [Authorize(Roles = "Admin, Veterinario, User")]
         public async Task<IActionResult> endRecovery([FromQuery] Guid hospitId)
         {
@@ -89,13 +89,13 @@ namespace BuildWeek2_Be_Team7.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpGet("GetAll")]
+        [HttpGet]
         [Authorize(Roles = "Admin, Veterinario, User")]
-        public async Task<IActionResult> GetAllHospitalization()
+        public async Task<IActionResult> GetAllHospitalization([FromQuery] string isActive = null)
         {
             try
             {
-                var result = await _hospitalizationServices.GetAllHospitActive();
+                var result = await _hospitalizationServices.GetAllHospitActive(isActive);
                 if (result == null)
                 {
                     return BadRequest(new { message = "Ops, something went wrong!" });
