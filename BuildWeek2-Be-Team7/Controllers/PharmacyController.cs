@@ -17,10 +17,12 @@ namespace BuildWeek2_Be_Team7.Controllers
     {
         private readonly PharmacyServices _pharmacyServices;
         private readonly ClientServices _clientServices;
-        public PharmacyController(PharmacyServices service, ClientServices service2)
+        private readonly ProductService _productService;
+        public PharmacyController(PharmacyServices service, ClientServices service2, ProductService service3)
         {
             _pharmacyServices = service;
             _clientServices = service2;
+            _productService = service3;
         }
 
         [HttpGet]
@@ -42,9 +44,11 @@ namespace BuildWeek2_Be_Team7.Controllers
 
                 var order = result.Select(s => new OrderDto
                 {
+                    Id = s.Id,
                     Pharmacist = $"Dott.{s.Pharmacist.FirstName} {s.Pharmacist.LastName}",
                     Client = new ClientDto
                     {
+                        IdOwner = s.ClientId,
                         Name = s.Client.Name,
                         Surname = s.Client.Surname,
                         CodiceFiscale = s.Client.CodiceFiscale,
@@ -62,7 +66,8 @@ namespace BuildWeek2_Be_Team7.Controllers
                         Name = s.Product.Name,
                         Image = s.Product.Image,
                         Price = s.Product.Price,
-                        Quantity = s.Quantity
+                        Quantity = s.Quantity,
+                        CompanyName = s.Product.Company.Name
                     }).ToList(),
                     Total = s.Total,
                 }).ToList();
@@ -91,9 +96,11 @@ namespace BuildWeek2_Be_Team7.Controllers
 
                 var order = new OrderDto
                 {
+                    Id = result.Id,
                     Pharmacist = $"Dott.{result.Pharmacist.FirstName} {result.Pharmacist.LastName}",
                     Client = new ClientDto
                     {
+                        IdOwner = result.Client.ClientId,
                         Name = result.Client.Name,
                         Surname = result.Client.Surname,
                         CodiceFiscale = result.Client.CodiceFiscale,
@@ -111,7 +118,8 @@ namespace BuildWeek2_Be_Team7.Controllers
                         Name = s.Product.Name,
                         Image = s.Product.Image,
                         Price = s.Product.Price,
-                        Quantity = s.Quantity
+                        Quantity = s.Quantity,
+                        CompanyName = s.Product.Company.Name
                     }).ToList(),
                     Total = result.Total,
                 };
@@ -163,13 +171,24 @@ namespace BuildWeek2_Be_Team7.Controllers
                     await _pharmacyServices.newPrescription(ricetta);
                 }
 
+                var total = 0m;
+                foreach (var item in model.Products)
+                {
+                    var prod = await _productService.GetProductByIdAsync(item.IdProduct);
+                    if (prod != null)
+                    {
+                        total += (decimal)prod.Price * (decimal)item.Quantity;
+                    }
+
+                }
+
                 var newOrder = new Order
                 {
                     IdPharmacist = userId,
                     ClientId = Client.ClientId,
                     Date = DateTime.UtcNow,
-                    IdPrescription = ricetta.Id,
-                    Total = model.Total,
+                    IdPrescription = ricetta != null ? ricetta.Id : null,
+                    Total = total,
                     OrderProds = model.Products.Select(s => new OrderProd
                     {
                         ProductId = s.IdProduct,
