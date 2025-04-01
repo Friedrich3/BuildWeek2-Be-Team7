@@ -3,6 +3,6 @@
     public class EditHospitalizationDto
     {
         public required DateOnly StartDate { get; set; }
-        public DateOnly? EndDate { get; set; }
+        public DateOnly? EndDate { get; set; } = null;
     }
 }

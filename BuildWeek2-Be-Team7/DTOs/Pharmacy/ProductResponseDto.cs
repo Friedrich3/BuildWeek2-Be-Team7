@@ -14,9 +14,9 @@ namespace BuildWeek2_Be_Team7.DTOs.Pharmacy
 
         public required bool isMed { get; set; }
 
-        public DrawerDto Drawer { get; set; }
+        public DrawerDto? Drawer { get; set; } = null;
 
-        public CompanyDto Company { get; set; }
+        public CompanyDto? Company { get; set; } = null;
 
         public required string CategoryName { get; set; }
     }

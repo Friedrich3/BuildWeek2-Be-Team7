@@ -9,7 +9,7 @@ namespace BuildWeek2_Be_Team7.DTOs.Pet
         public required string Color { get; set; }
         public required string Race { get; set; }
         public required DateOnly BirthDate { get; set; }
-        public string Microchip { get; set; }
-        public OwnerDto Owner { get; set; }
+        public string? Microchip { get; set; } = null;
+        public OwnerDto? Owner { get; set; } = null;
     }
 }

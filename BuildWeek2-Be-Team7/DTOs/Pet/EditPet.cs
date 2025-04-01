@@ -6,6 +6,6 @@
         public required string Color { get; set; }
         public required int Race { get; set; }
         public required DateOnly BirthDate { get; set; }
-        public string? Microchip { get; set; }
+        public string? Microchip { get; set; } = null;
     }
 }

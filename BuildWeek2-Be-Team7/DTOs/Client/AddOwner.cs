@@ -6,6 +6,6 @@
         public required string Surname { get; set; }
         public required DateOnly Birthdate { get; set; }
         public required string CodiceFiscale { get; set; }
-        public string Email { get; set; }
+        public string? Email { get; set; } = null;
     }
 }
