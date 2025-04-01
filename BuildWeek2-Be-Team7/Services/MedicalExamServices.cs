@@ -87,10 +87,25 @@ namespace BuildWeek2_Be_Team7.Services
             return await SaveAsync();
         }
 
-        public async Task<List<SingleMedicalExamDto>> GetAllExam()
+        public async Task<List<SingleMedicalExamDto>> GetAllExam(string order)
         {
             var ExamList =  new List<SingleMedicalExamDto>();
-            var data = await _context.MedicalExams.Include(p => p.Vet).Include(p => p.Pet).ThenInclude(p => p.Owner).ToListAsync();
+
+            List<MedicalExam> data;
+            switch (order){
+                case "asc":
+                    data = await _context.MedicalExams.Include(p => p.Vet).Include(p => p.Pet).ThenInclude(p => p.Owner).OrderBy(p => p.ExamDate).ToListAsync();
+                    break;
+
+                case "desc":
+                    data = await _context.MedicalExams.Include(p => p.Vet).Include(p => p.Pet).ThenInclude(p => p.Owner).OrderByDescending(p => p.ExamDate).ToListAsync();
+                    break;
+
+                default:
+                    data = await _context.MedicalExams.Include(p => p.Vet).Include(p => p.Pet).ThenInclude(p => p.Owner).ToListAsync();
+                    break;
+            }
+
             if ( data == null ) { return ExamList; }
             ExamList = data.Select(item => new SingleMedicalExamDto()
             {

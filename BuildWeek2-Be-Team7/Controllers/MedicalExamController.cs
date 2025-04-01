@@ -20,11 +20,11 @@ namespace BuildWeek2_Be_Team7.Controllers
         }
 
         [HttpGet("all")]
-        public async Task<IActionResult> GetAllMedical()
+        public async Task<IActionResult> GetAllMedical([FromQuery] string order = null)
         {
             try
             {
-                var result = await _medicalExamServices.GetAllExam();
+                var result = await _medicalExamServices.GetAllExam(order);
                 if (result == null)
                 {
                     return BadRequest(new { message = "ops, something went wrong!" });
