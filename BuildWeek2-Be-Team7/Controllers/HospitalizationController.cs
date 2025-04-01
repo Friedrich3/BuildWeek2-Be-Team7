@@ -53,7 +53,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpPost("edit")]
+        [HttpPut("edit")]
         [Authorize(Roles = "Admin, Veterinario, User")]
         public async Task<IActionResult> EditSaveHospitalization([FromQuery]Guid hospitId, [FromBody] EditHospitalizationDto editHospitalizationDto)
         {
@@ -71,7 +71,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpPost("endRecovery")]
+        [HttpPut("endRecovery")]
         [Authorize(Roles = "Admin, Veterinario, User")]
         public async Task<IActionResult> endRecovery([FromQuery] Guid hospitId)
         {
@@ -89,7 +89,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpPost("GetAll")]
+        [HttpGet("GetAll")]
         [Authorize(Roles = "Admin, Veterinario, User")]
         public async Task<IActionResult> GetAllHospitalization()
         {
