@@ -82,6 +82,7 @@ try
     builder.Services.AddScoped<ProductService>();
     builder.Services.AddScoped<MedicalExamServices>();
     builder.Services.AddScoped<HospitalizationServices>();
+    builder.Services.AddScoped<PharmacyServices>();
 
 
     var app = builder.Build();
