@@ -158,6 +158,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                 }
                 var newPet = new Pet
                 {
+                    RegistrationDate = DateOnly.FromDateTime(DateTime.UtcNow),
                     Name = pet.Name,
                     BirthDate = pet.BirthDate,
                     Color = pet.Color,

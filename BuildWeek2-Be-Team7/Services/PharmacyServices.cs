@@ -31,10 +31,12 @@ namespace BuildWeek2_Be_Team7.Services
             try
             {
                 var result = await _context.Orders
+                    .Include(p=> p.Client)
                     .Include(p => p.Prescription)
                     .Include(p => p.Pharmacist)
                     .Include(p => p.OrderProds)
                     .ThenInclude(p => p.Product)
+                    .ThenInclude(pp=> pp.Company)
                     .ToListAsync();
                 return result;
             }
@@ -50,10 +52,12 @@ namespace BuildWeek2_Be_Team7.Services
             try
             {
                 var result = await _context.Orders
+                    .Include(p => p.Client)
                     .Include(p => p.Prescription)
                     .Include(p => p.Pharmacist)
                     .Include(p => p.OrderProds)
                     .ThenInclude(p => p.Product)
+                    .ThenInclude(pp => pp.Company)
                     .FirstOrDefaultAsync(p => p.Id == id);
                 if (result == null)
                 {
