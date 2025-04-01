@@ -2,6 +2,7 @@
 using BuildWeek2_Be_Team7.DTOs.Pet;
 using BuildWeek2_Be_Team7.Models;
 using BuildWeek2_Be_Team7.Models.Animali;
+using BuildWeek2_Be_Team7.Models.Pharmacy;
 using BuildWeek2_Be_Team7.Services;
 using FluentEmail.Core;
 using Microsoft.AspNetCore.Authorization;
@@ -48,7 +49,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                     Color = s.Color,
                     Race = s.Race.Name,
                     Microchip = s.Microchip,
-                    Owner = new OwnerDto
+                    Owner = s.Owner != null ? new OwnerDto
                     {
                         IdOwner = s.Owner.ClientId,
                         Name = s.Owner.Name,
@@ -56,7 +57,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                         Birthdate = s.Owner.Birthdate,
                         Email = s.Owner.Email,
                         CodiceFiscale = s.Owner.CodiceFiscale,
-                    }
+                    } : null
                 }).ToList();
 
                 return Ok(new
@@ -195,7 +196,7 @@ namespace BuildWeek2_Be_Team7.Controllers
             return result ? Ok(new { message = "Pet successfully deleted!" }) : BadRequest(new { message = "Something went wrong" });
         }
 
-        [HttpGet("/Owner")]
+        [HttpGet("Owner")]
         public async Task<IActionResult> GetOneOwnerCF([FromQuery] string CF)
         {
             try
@@ -210,7 +211,7 @@ namespace BuildWeek2_Be_Team7.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("Owner")]
         public async Task<IActionResult> UpdateOwner([FromQuery] Guid id, [FromBody] string email)
         {
             try
@@ -225,7 +226,7 @@ namespace BuildWeek2_Be_Team7.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("Owner")]
         public async Task<IActionResult> DeleteOwner([FromQuery] Guid id)
         {
             try
