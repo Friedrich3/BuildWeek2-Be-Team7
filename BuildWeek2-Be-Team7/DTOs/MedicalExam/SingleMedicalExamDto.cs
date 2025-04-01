@@ -9,7 +9,7 @@ namespace BuildWeek2_Be_Team7.DTOs.MedicalExam
         public required string State { get; set; }
         public required string VetName { get; set; }
         public required string PetName { get; set; }
-        public required string OwnerName { get; set; }
+        public string? OwnerName { get; set; } = null;
 
     }
 }

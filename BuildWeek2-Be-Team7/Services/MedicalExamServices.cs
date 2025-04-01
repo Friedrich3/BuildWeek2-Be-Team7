@@ -100,7 +100,7 @@ namespace BuildWeek2_Be_Team7.Services
                 State = item.State,
                 VetName = $"Dott. {item.Vet.LastName} {item.Vet.FirstName}",
                 PetName = item.Pet.Name ,
-                OwnerName = $"{item.Pet.Owner.Name} {item.Pet.Owner.Surname}",
+                OwnerName = item.Pet.Owner != null ? $"{item.Pet.Owner.Name} {item.Pet.Owner.Surname}" : null,
             }).ToList();
             return ExamList;
         }

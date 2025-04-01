@@ -19,7 +19,7 @@ namespace BuildWeek2_Be_Team7.Controllers
             _medicalExamServices = medicalExamServices;
         }
 
-        [HttpGet("all")]
+        [HttpGet]
         public async Task<IActionResult> GetAllMedical()
         {
             try
@@ -38,7 +38,7 @@ namespace BuildWeek2_Be_Team7.Controllers
             }
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddExam([FromBody] AddMedicalExam addMedicalExam)
         {
             try
@@ -58,7 +58,7 @@ namespace BuildWeek2_Be_Team7.Controllers
             }
         }
 
-        [HttpGet("edit")]
+        [HttpGet]
         public async Task<IActionResult> GetExam([FromQuery] string id)
         {
             try
@@ -77,7 +77,7 @@ namespace BuildWeek2_Be_Team7.Controllers
             }
         }
 
-        [HttpPut("saveEdit")]
+        [HttpPut]
         public async Task<IActionResult> SaveExam([FromQuery] string id, [FromBody] MedicalExamRequestDto medicalExamRequestDto)
         {
             try
@@ -95,7 +95,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpDelete("delete")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteExam([FromQuery] string id)
         {
             try
