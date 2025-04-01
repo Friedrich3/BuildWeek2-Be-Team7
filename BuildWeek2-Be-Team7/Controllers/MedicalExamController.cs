@@ -19,12 +19,12 @@ namespace BuildWeek2_Be_Team7.Controllers
             _medicalExamServices = medicalExamServices;
         }
 
-        [HttpGet("all")]
-        public async Task<IActionResult> GetAllMedical()
+        [HttpGet]
+        public async Task<IActionResult> GetAllMedical([FromQuery] string order = null)
         {
             try
             {
-                var result = await _medicalExamServices.GetAllExam();
+                var result = await _medicalExamServices.GetAllExam(order);
                 if (result == null)
                 {
                     return BadRequest(new { message = "ops, something went wrong!" });
@@ -38,12 +38,13 @@ namespace BuildWeek2_Be_Team7.Controllers
             }
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddExam([FromBody] AddMedicalExam addMedicalExam)
         {
             try
             {
-                var result = await _medicalExamServices.AddNewExam(addMedicalExam, ClaimTypes.Email);
+                var email = User.Claims.FirstOrDefault(p => p.Type == ClaimTypes.Email).Value;
+                var result = await _medicalExamServices.AddNewExam(addMedicalExam, email);
                 if (!result)
                 {
                     return BadRequest(new { message = "Ops, Something went wrong!" });
@@ -57,8 +58,8 @@ namespace BuildWeek2_Be_Team7.Controllers
             }
         }
 
-        [HttpGet("edit")]
-        public async Task<IActionResult> GetExam([FromQuery] string id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetExam(string id)
         {
             try
             {
@@ -76,12 +77,13 @@ namespace BuildWeek2_Be_Team7.Controllers
             }
         }
 
-        [HttpPut("saveEdit")]
+        [HttpPut]
         public async Task<IActionResult> SaveExam([FromQuery] string id, [FromBody] MedicalExamRequestDto medicalExamRequestDto)
         {
             try
             {
-                var result = await _medicalExamServices.EditExam(id, medicalExamRequestDto, ClaimTypes.Email);
+                var email = User.Claims.FirstOrDefault(p => p.Type == ClaimTypes.Email).Value;
+                var result = await _medicalExamServices.EditExam(id, medicalExamRequestDto, email);
                 if (!result)
                 {
                     return BadRequest(new { message = "Ops, Something went wrong!" });
@@ -93,7 +95,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpDelete("delete")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteExam([FromQuery] string id)
         {
             try
