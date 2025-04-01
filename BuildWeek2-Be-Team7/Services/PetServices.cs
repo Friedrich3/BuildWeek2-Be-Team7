@@ -71,6 +71,7 @@ namespace BuildWeek2_Be_Team7.Services
                     .Include(p => p.Race)
                     .Include(p => p.Owner)
                     .Include(p => p.MedicalExams)
+                    .ThenInclude(me => me.Vet)
                     .Include(p => p.Hospitalizations)
                     .FirstOrDefaultAsync(p => p.PetId == id);
                 if (result == null)

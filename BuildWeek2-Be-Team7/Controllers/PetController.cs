@@ -1,4 +1,6 @@
 ﻿using BuildWeek2_Be_Team7.DTOs.Client;
+using BuildWeek2_Be_Team7.DTOs.Hospitalization;
+using BuildWeek2_Be_Team7.DTOs.MedicalExam;
 using BuildWeek2_Be_Team7.DTOs.Pet;
 using BuildWeek2_Be_Team7.Models;
 using BuildWeek2_Be_Team7.Models.Animali;
@@ -82,7 +84,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                     });
                 }
 
-                var pet = new PetDto
+                var pet = new SinglePetInfoShow
                 {
                     PetId = result.PetId,
                     Name = result.Name,
@@ -98,7 +100,23 @@ namespace BuildWeek2_Be_Team7.Controllers
                         Birthdate = result.Owner.Birthdate,
                         Email = result.Owner.Email,
                         CodiceFiscale = result.Owner.CodiceFiscale,
-                    }
+                    },
+                    RegistrationDate = result.RegistrationDate,
+                    PetExams = result.MedicalExams != null ? result.MedicalExams.Select(e => new PetInfoShowExam
+                    {
+                        ExamDate = e.ExamDate,
+                        ExamId = e.ExamId,
+                        Diagnosis = e.Diagnosis,
+                        State = e.State,
+                        VetName = $"Dott. {e.Vet.LastName} {e.Vet.FirstName}",
+                        Treatment = e.Treatment
+                    }).ToList() : null,
+                    PetHospitalization = result.Hospitalizations != null ? result.Hospitalizations.Select(h => new PetInfoShowHospital
+                    {
+                        HospitalizationId = h.HospitalizationId,
+                        StartDate = h.StartDate,
+                        EndDate = (DateOnly)h.EndDate
+                    }).ToList() : null
                 };
                 return Ok(new
                 {
