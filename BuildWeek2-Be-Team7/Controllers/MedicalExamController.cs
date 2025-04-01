@@ -43,7 +43,8 @@ namespace BuildWeek2_Be_Team7.Controllers
         {
             try
             {
-                var result = await _medicalExamServices.AddNewExam(addMedicalExam, ClaimTypes.Email);
+                var email = User.Claims.FirstOrDefault(p => p.Type == ClaimTypes.Email).Value;
+                var result = await _medicalExamServices.AddNewExam(addMedicalExam, email);
                 if (!result)
                 {
                     return BadRequest(new { message = "Ops, Something went wrong!" });
@@ -81,7 +82,8 @@ namespace BuildWeek2_Be_Team7.Controllers
         {
             try
             {
-                var result = await _medicalExamServices.EditExam(id, medicalExamRequestDto, ClaimTypes.Email);
+                var email = User.Claims.FirstOrDefault(p => p.Type == ClaimTypes.Email).Value;
+                var result = await _medicalExamServices.EditExam(id, medicalExamRequestDto, email);
                 if (!result)
                 {
                     return BadRequest(new { message = "Ops, Something went wrong!" });
