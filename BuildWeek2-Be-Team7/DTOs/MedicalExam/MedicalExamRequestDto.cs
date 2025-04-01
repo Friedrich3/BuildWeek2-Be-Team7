@@ -13,5 +13,6 @@ namespace BuildWeek2_Be_Team7.DTOs.MedicalExam
         //[AllowedValues("Pending , Completed, Cancelled, NoShow")]
         public required string State { get; set; }
         public required string VetId { get; set; }
+        public required string LastModified { get; set; }
     }
 }

@@ -4,7 +4,6 @@ namespace BuildWeek2_Be_Team7.DTOs.Pharmacy
 {
     public class AddOrder
     {
-        public required string Pharmacist { get; set; }
         public string? NameClient { get; set; } = null;
         public string? SurnameClient { get; set; } = null;
         public required string CodiceFiscaleClient { get; set; }

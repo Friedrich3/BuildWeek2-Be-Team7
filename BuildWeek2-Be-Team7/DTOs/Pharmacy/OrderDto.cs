@@ -10,7 +10,7 @@ namespace BuildWeek2_Be_Team7.DTOs.Pharmacy
     {
         public Guid Id { get; set; }
         public required string Pharmacist { get; set; }
-        public ClientDto Client { get; set; }
+        public ClientInfoShow Client { get; set; }
         public DateTime Date { get; set; }
         public PrescriptionDto? Prescription { get; set; }
         public decimal Total { get; set; }

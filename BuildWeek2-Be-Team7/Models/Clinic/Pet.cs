@@ -11,7 +11,7 @@ namespace BuildWeek2_Be_Team7.Models.Animali
 
         [Required]
         [DataType(DataType.Date)]
-        public DateOnly RegistrationDate { get; set; }
+        public DateOnly RegistrationDate { get; set; } 
 
         [Required]
         [StringLength(50)]
