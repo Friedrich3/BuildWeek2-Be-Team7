@@ -25,10 +25,9 @@ namespace BuildWeek2_Be_Team7.Services
             }
         }
 
-        public async Task<bool> AddNewExam(AddMedicalExam addMedicalExam , string email)
+        public async Task<bool> AddNewExam(AddMedicalExam addMedicalExam , string userEmail)
         {
-            
-            var user = await _context.ApplicationUsers.FirstOrDefaultAsync(x => x.Email == email);
+            var user = await _context.ApplicationUsers.FirstOrDefaultAsync(x => x.Email == userEmail);
             if (user == null) { return false; }
             var newExam = new MedicalExam()
             {
@@ -100,7 +99,7 @@ namespace BuildWeek2_Be_Team7.Services
                 State = item.State,
                 VetName = $"Dott. {item.Vet.LastName} {item.Vet.FirstName}",
                 PetName = item.Pet.Name ,
-                OwnerName = $"{item.Pet.Owner.Name} {item.Pet.Owner.Surname}",
+                OwnerName = item.Pet.Owner.Name ,
             }).ToList();
             return ExamList;
         }
