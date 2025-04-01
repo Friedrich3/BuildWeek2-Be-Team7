@@ -43,12 +43,12 @@ namespace BuildWeek2_Be_Team7.Services
             }
         }
 
-        public async Task<Client?> GetOne(string email)
+        public async Task<Client?> GetOne(string CF)
         {
             try
             {
                 var result = await _context.Clients
-                    .FirstOrDefaultAsync(p => p.Email == email);
+                    .FirstOrDefaultAsync(p => p.CodiceFiscale == CF);
                 if (result == null)
                 {
                     return null;
@@ -111,11 +111,11 @@ namespace BuildWeek2_Be_Team7.Services
             }
         }
 
-        public async Task<bool> UpdateOwnerAsync(Guid id, string email)
+        public async Task<bool> UpdateOwnerAsync(string CF, string email)
         {
             try
             {
-                var owner = await _context.Clients.FirstOrDefaultAsync(c => c.ClientId == id);
+                var owner = await _context.Clients.FirstOrDefaultAsync(c => c.CodiceFiscale == CF);
 
                 if (owner == null) 
                 {
@@ -133,18 +133,18 @@ namespace BuildWeek2_Be_Team7.Services
             }
         }
 
-        public async Task<bool> DeleteOwnerAsync(Guid id)
+        public async Task<bool> DeleteOwnerAsync(string CF)
         {
             try
             {
-                var owner = await _context.Clients.FirstOrDefaultAsync(c => c.ClientId == id);
+                var owner = await _context.Clients.FirstOrDefaultAsync(c => c.CodiceFiscale == CF);
 
                 if (owner == null)
                 {
                     return false;
                 }
 
-                var pets = await _context.Pets.Where(p => p.OwnerId ==  id).ToListAsync();
+                var pets = await _context.Pets.Where(p => p.OwnerId ==  owner.ClientId).ToListAsync();
 
                 if (pets.Any()) 
                 {
