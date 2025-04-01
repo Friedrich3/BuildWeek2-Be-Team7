@@ -1,4 +1,4 @@
-﻿using BuildWeek2_Be_Team7.DTOs.Hospitalization;
+using BuildWeek2_Be_Team7.DTOs.Hospitalization;
 using BuildWeek2_Be_Team7.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -91,11 +91,11 @@ namespace BuildWeek2_Be_Team7.Controllers
         }
         [HttpGet]
         [Authorize(Roles = "Admin, Veterinario, User")]
-        public async Task<IActionResult> GetAllHospitalization()
+        public async Task<IActionResult> GetAllHospitalization([FromQuery] string isActive = null)
         {
             try
             {
-                var result = await _hospitalizationServices.GetAllHospitActive();
+                var result = await _hospitalizationServices.GetAllHospitActive(isActive);
                 if (result == null)
                 {
                     return BadRequest(new { message = "Ops, something went wrong!" });
