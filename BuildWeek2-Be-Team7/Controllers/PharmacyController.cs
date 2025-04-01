@@ -46,9 +46,8 @@ namespace BuildWeek2_Be_Team7.Controllers
                 {
                     Id = s.Id,
                     Pharmacist = $"Dott.{s.Pharmacist.FirstName} {s.Pharmacist.LastName}",
-                    Client = new ClientDto
+                    Client = new ClientInfoShow
                     {
-                        IdOwner = s.ClientId,
                         Name = s.Client.Name,
                         Surname = s.Client.Surname,
                         CodiceFiscale = s.Client.CodiceFiscale,
@@ -98,9 +97,8 @@ namespace BuildWeek2_Be_Team7.Controllers
                 {
                     Id = result.Id,
                     Pharmacist = $"Dott.{result.Pharmacist.FirstName} {result.Pharmacist.LastName}",
-                    Client = new ClientDto
+                    Client = new ClientInfoShow
                     {
-                        IdOwner = result.Client.ClientId,
                         Name = result.Client.Name,
                         Surname = result.Client.Surname,
                         CodiceFiscale = result.Client.CodiceFiscale,
