@@ -115,7 +115,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                     {
                         HospitalizationId = h.HospitalizationId,
                         StartDate = h.StartDate,
-                        EndDate = (DateOnly)h.EndDate
+                        EndDate = h.EndDate != null ? (DateOnly)h.EndDate : null
                     }).ToList() : null
                 };
                 return Ok(new

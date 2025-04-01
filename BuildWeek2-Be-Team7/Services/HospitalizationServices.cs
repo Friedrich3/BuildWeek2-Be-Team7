@@ -5,6 +5,7 @@ using BuildWeek2_Be_Team7.Models.Animali;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace BuildWeek2_Be_Team7.Services
 {
@@ -21,8 +22,9 @@ namespace BuildWeek2_Be_Team7.Services
             {
                 return await _context.SaveChangesAsync() > 0;
             }
-            catch
+            catch (Exception ex)
             {
+                Log.Warning(ex, ex.Message);
                 return false;
             }
         }
@@ -34,7 +36,7 @@ namespace BuildWeek2_Be_Team7.Services
             var newHospit = new Hospitalization()
             {
                 HospitalizationId = Guid.NewGuid(),
-                StartDate = addHospitalizationDto.StartDate,
+                StartDate = DateOnly.FromDateTime(addHospitalizationDto.StartDate),
                 PetId = addHospitalizationDto.PetId,
             };
             _context.Hospitalizations.Add(newHospit);
