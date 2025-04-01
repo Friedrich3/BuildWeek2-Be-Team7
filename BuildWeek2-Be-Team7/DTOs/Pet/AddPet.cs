@@ -9,10 +9,10 @@
         public string? Microchip { get; set; }
 
         //OWNER
-        public required string NameOwner { get; set; }
-        public required string Surname { get; set; }
-        public required DateOnly BirthdateOwner { get; set; }
-        public required string CodiceFiscale { get; set; }
-        public string Email { get; set; }
+        public string? NameOwner { get; set; } = null;
+        public string? Surname { get; set; } = null;
+        public DateOnly? BirthdateOwner { get; set; } = null;
+        public string? CodiceFiscale { get; set; } = null;
+        public string? Email { get; set; } = null;
     }
 }

@@ -149,7 +149,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                             ClientId = Guid.NewGuid(),
                             Name = pet.NameOwner,
                             Surname = pet.Surname,
-                            Birthdate = pet.BirthdateOwner,
+                            Birthdate = (DateOnly)pet.BirthdateOwner,
                             CodiceFiscale = pet.CodiceFiscale,
                             Email = pet.Email,
                         };
