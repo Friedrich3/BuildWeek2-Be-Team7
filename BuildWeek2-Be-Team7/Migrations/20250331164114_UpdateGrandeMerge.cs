@@ -378,7 +378,7 @@ namespace BuildWeek2_Be_Team7.Migrations
                 {
                     HospitalizationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StartDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    EndDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    EndDate = table.Column<DateOnly>(type: "date", nullable: true),
                     PetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>

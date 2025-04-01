@@ -108,5 +108,26 @@ namespace BuildWeek2_Be_Team7.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpGet("HospitalizedPet")]
+        [Authorize(Roles = "Admin, Veterinario, User")]
+        public async Task<IActionResult> GetHospitalizedPet([FromQuery] string microchip)
+        {
+            try
+            {
+                var (result, pet) = await _hospitalizationServices.GetHospitalizedPetAsync(microchip);
+
+                if (!result)
+                {
+                    return BadRequest(new { message = "Pet not found!" });
+                }
+
+                return Ok(new { message = "Pet found", Pet = pet });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }
