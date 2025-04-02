@@ -91,9 +91,14 @@ namespace BuildWeek2_Be_Team7.Controllers
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.Email, user.Email));
             claims.Add(new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"));
+            //aggiunta di claim personalizzati per catturare meglio i dati nel frontend
+            claims.Add(new Claim("email", user.Email));
+            claims.Add(new Claim("name", $"{user.FirstName} {user.LastName}"));
+
             foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
+                claims.Add(new Claim("role", role));
             }
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecurityKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -105,7 +110,7 @@ namespace BuildWeek2_Be_Team7.Controllers
             return Ok(new TokenResponse()
             {
                 Token = tokenString,
-                Expires = expiry,
+                //Expires = expiry,
             });
         }
 
