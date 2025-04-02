@@ -232,5 +232,19 @@ namespace BuildWeek2_Be_Team7.Services
                 return false;
             }
         }
+
+        public async Task<List<GetDrawerDto>> getDrawers()
+        {
+            var List = new List<GetDrawerDto>();
+            var data = await _context.Drawers.ToListAsync();
+            if (data == null) { return null; }
+            List = data.Select(item => new GetDrawerDto()
+            {
+                DrawerId = item.Id,
+                Name = item.Name,
+                Position = item.Position,
+            }).ToList();
+            return List;
+        }
     }
 }

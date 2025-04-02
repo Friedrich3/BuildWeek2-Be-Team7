@@ -123,6 +123,27 @@ namespace BuildWeek2_Be_Team7.Controllers
             }
         }
 
+        [HttpGet("drawers")]
+           public async Task<IActionResult> GetDrawers()
+        {
+            try
+            {
+                var result = await _productService.getDrawers();
+
+                if (result == null)
+                {
+                    return BadRequest(new { message = "Ops qualcosa è andato storto!" });
+                }
+
+                return Ok(new { message = "Bravi TUTTI clapclap", data = result });
+            }
+            catch
+            {
+                return StatusCode(500, new { messagge = "Ops qualcosa è andato storto!" });
+            }
+        
+    }
+
 
     }
 }
