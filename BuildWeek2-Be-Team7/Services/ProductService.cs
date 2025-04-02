@@ -232,5 +232,31 @@ namespace BuildWeek2_Be_Team7.Services
                 return false;
             }
         }
+
+        public async Task<List<CategoriesDto>?> GetAllCategoriesAsync()
+        {
+            try
+            {
+                var categories = await _context.Categories.ToListAsync();
+
+                var categoryList = new List<CategoriesDto>();
+
+                foreach (var category in categories) 
+                {
+                    var newCategory = new CategoriesDto()
+                    {
+                        Id = category.Id,
+                        Name = category.Name,
+                    };
+                    categoryList.Add(newCategory);
+                }
+
+                return categoryList;
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

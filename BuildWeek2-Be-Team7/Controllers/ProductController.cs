@@ -123,6 +123,24 @@ namespace BuildWeek2_Be_Team7.Controllers
             }
         }
 
+        [HttpGet("Categories")]
+        public async Task<IActionResult> GetAllCategories()
+        {
+            try
+            {
+                var categories = await _productService.GetAllCategoriesAsync();
 
+                if (categories == null)
+                {
+                    return BadRequest(new { message = "Ops qualcosa è andato storto!" });
+                }
+
+                return Ok(new { categories });
+            }
+            catch
+            {
+                return StatusCode(500, new { messagge = "Ops qualcosa è andato storto!" });
+            }
+        }
     }
 }
