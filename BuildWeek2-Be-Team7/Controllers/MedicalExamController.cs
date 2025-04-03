@@ -113,6 +113,24 @@ namespace BuildWeek2_Be_Team7.Controllers
             }
         }
 
+        [HttpGet("vets")]
+        public async Task<IActionResult> GetAllVets()
+        {
+            try
+            {
+                var vetList = await _medicalExamServices.GetAllVets();
+                if (vetList == null)
+                {
+                    return BadRequest(new { message = "Ops, Something went wrong!" });
+                }
+                return Ok(new {  data = vetList });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
 
 
 

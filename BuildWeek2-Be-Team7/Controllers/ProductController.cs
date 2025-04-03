@@ -9,7 +9,7 @@ namespace BuildWeek2_Be_Team7.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Farmacista, Admin")]
+    [Authorize(Roles = "Farmacista , Admin")]
     public class ProductController : ControllerBase
     {
         private readonly ProductService _productService;
