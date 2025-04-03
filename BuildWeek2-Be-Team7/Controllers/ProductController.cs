@@ -26,7 +26,7 @@ namespace BuildWeek2_Be_Team7.Controllers
             {
                 var result = await _productService.AddProductAsync(addProductDto);
 
-                if (!result) 
+                if (!result)
                 {
                     return BadRequest(new { messagge = "Ops qualcosa è andato storto" });
                 }
@@ -74,7 +74,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                     return BadRequest(new { message = "Ops qualcosa è andato storto!" });
                 }
 
-               return Ok(new { Product });
+                return Ok(new { Product });
             }
             catch
             {
@@ -84,10 +84,10 @@ namespace BuildWeek2_Be_Team7.Controllers
 
         [HttpPut]
         public async Task<IActionResult> ChangeProduct([FromQuery] Guid id, [FromForm] ChangeProductDto changeProductDto)
-        {           
+        {
             try
-            { 
-               //ModelState.Clear(); 
+            {
+                //ModelState.Clear(); 
                 var result = await _productService.ChangeProductAsync(id, changeProductDto);
 
                 if (!result)
@@ -155,11 +155,12 @@ namespace BuildWeek2_Be_Team7.Controllers
                     return BadRequest(new { message = "Ops qualcosa è andato storto!" });
                 }
 
-                return Ok(new { message = "Bravi TUTTI clapclap", data = result });
+                return Ok(new { result });
             }
             catch
             {
                 return StatusCode(500, new { messagge = "Ops qualcosa è andato storto!" });
             }
         }
+    }
 }
