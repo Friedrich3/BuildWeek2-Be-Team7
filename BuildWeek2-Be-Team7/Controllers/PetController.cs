@@ -261,5 +261,25 @@ namespace BuildWeek2_Be_Team7.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpGet("Race")]
+        public async Task<IActionResult> GetAllRaces()
+        {
+            try
+            {
+                var races = await _petServices.GetAllRacesAsync();
+                
+                if(races == null)
+                {
+                    return BadRequest(new { message = "Something went wrong" });
+                }
+
+                return Ok(new { races });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BuildWeek2_Be_Team7.Data;
+using BuildWeek2_Be_Team7.DTOs.Pet;
 using BuildWeek2_Be_Team7.Models;
 using BuildWeek2_Be_Team7.Models.Animali;
 using Microsoft.EntityFrameworkCore;
@@ -126,5 +127,31 @@ namespace BuildWeek2_Be_Team7.Services
             return await SaveAsync();
         }
 
+        public async Task<List<RaceDto>?> GetAllRacesAsync()
+        {
+            try
+            {
+                var races = await _context.Races.ToListAsync();
+
+                if(races == null)
+                {
+                    return null;
+                }
+
+                var racesList = new List<RaceDto>();
+
+                racesList = races.Select((r) => new RaceDto()
+                {
+                    Id = r.RaceId,
+                    Name = r.Name
+                }).ToList();
+
+                return racesList;
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }
