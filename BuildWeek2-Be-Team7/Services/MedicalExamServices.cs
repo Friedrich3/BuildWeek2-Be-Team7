@@ -33,7 +33,7 @@ namespace BuildWeek2_Be_Team7.Services
             {
                 ExamId = Guid.NewGuid(),
                 ExamDate = addMedicalExam.ExamDate,
-                PetId = addMedicalExam.PetId,
+                PetId = Guid.Parse(addMedicalExam.PetId),
                 State = "Pending",
                 VetId = addMedicalExam.VetId,
                 LastModified = $"Dott.{user.LastName} {user.FirstName}"
@@ -118,5 +118,20 @@ namespace BuildWeek2_Be_Team7.Services
             }).ToList();
             return ExamList;
         }
+
+        public async Task<List<VeterinarioDto>> GetAllVets()
+        {
+            var Vetlist = new List<VeterinarioDto>();
+            var data = await _context.ApplicationUserRoles.Include(p => p.User).Include(p => p.Role).Where(p => p.Role.Name == "Veterinario").ToListAsync();
+            if (data == null) { return Vetlist; }
+            Vetlist = data.Select(item => new VeterinarioDto() 
+            {
+                VetId = item.User.Id.ToString(),
+                FirstName = item.User.FirstName,
+                LastName = item.User.LastName,
+            }).ToList();
+            return Vetlist;
+        }
+
     }
 }
