@@ -11,5 +11,9 @@ namespace BuildWeek2_Be_Team7.DTOs.MedicalExam
         public required string PetId { get; set; }
         public required string VetId { get; set; } 
 
+        public string? Diagnosis {  get; set; }
+        public  string? Treatment {  get; set; }
+
+
     }
 }

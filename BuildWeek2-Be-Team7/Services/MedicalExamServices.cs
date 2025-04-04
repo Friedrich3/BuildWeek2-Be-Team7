@@ -36,6 +36,8 @@ namespace BuildWeek2_Be_Team7.Services
                 PetId = Guid.Parse(addMedicalExam.PetId),
                 State = "Pending",
                 VetId = addMedicalExam.VetId,
+                Treatment = addMedicalExam.Treatment,
+                Diagnosis = addMedicalExam.Diagnosis,
                 LastModified = $"Dott.{user.LastName} {user.FirstName}"
             };
             _context.MedicalExams.Add(newExam);
