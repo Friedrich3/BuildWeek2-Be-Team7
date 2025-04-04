@@ -92,7 +92,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                     Color = result.Color,
                     Race = result.Race.Name,
                     Microchip = result.Microchip,
-                    Owner = new OwnerDto
+                    Owner = result.Owner != null ? new OwnerDto
                     {
                         IdOwner = result.Owner.ClientId,
                         Name = result.Owner.Name,
@@ -100,7 +100,7 @@ namespace BuildWeek2_Be_Team7.Controllers
                         Birthdate = result.Owner.Birthdate,
                         Email = result.Owner.Email,
                         CodiceFiscale = result.Owner.CodiceFiscale,
-                    },
+                    } : null,
                     RegistrationDate = result.RegistrationDate,
                     PetExams = result.MedicalExams != null ? result.MedicalExams.Select(e => new PetInfoShowExam
                     {

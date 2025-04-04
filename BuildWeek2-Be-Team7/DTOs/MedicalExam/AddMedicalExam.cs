@@ -8,7 +8,7 @@ namespace BuildWeek2_Be_Team7.DTOs.MedicalExam
     {
       
         public required DateTime ExamDate { get; set; }
-        public required Guid PetId { get; set; }
+        public required string PetId { get; set; }
         public required string VetId { get; set; } 
 
     }
