@@ -195,7 +195,7 @@ namespace BuildWeek2_Be_Team7.Services
                     {
                         await changeProductDto.Image.CopyToAsync(stream);
                     }
-                    webPath = "/assets/images/" + fileName;
+                    webPath = "assets/images/" + fileName;
                 }
 
                 existingProduct.Image = webPath;
